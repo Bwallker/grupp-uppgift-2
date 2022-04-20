@@ -3,6 +3,7 @@ package root.controller;
 import java.util.List;
 import java.util.Set;
 
+import javafx.scene.control.TreeItem;
 import root.model.Album;
 import root.model.SoundClip;
 import root.model.SoundClipBlockingQueue;
@@ -35,8 +36,9 @@ public class MusicOrganizerController {
 	 */
 	public Set<SoundClip> loadSoundClips(String path) {
 		Set<SoundClip> clips = SoundClipLoader.loadSoundClips(path);
-		// TODO: Add the loaded sound clips to the root album
 
+		// TODO: Add the loaded sound clips to the root album
+		clips.forEach(root::addSong);
 		return clips;
 	}
 	
@@ -56,7 +58,10 @@ public class MusicOrganizerController {
 	 */
 	public void addNewAlbum(){ //TODO Update parameters if needed - e.g. you might want to give the currently selected album as parameter
 		// TODO: Add your code here
-		
+		final var newAlbumName = view.promptForAlbumName();
+		final var newAlbum = new Album(newAlbumName, view.getSelectedAlbum());
+		view.getSelectedAlbum().addAlbum(newAlbum);
+		view.onAlbumAdded(newAlbum);
 	}
 	
 	/**
@@ -64,7 +69,9 @@ public class MusicOrganizerController {
 	 */
 	public void deleteAlbum(){ //TODO Update parameters if needed
 		// TODO: Add your code here
-		
+		view.getSelectedAlbum().setParent(null);
+		view.getSelectedAlbum().getParent().removeAlbum(view.getSelectedAlbum());
+		view.onAlbumRemoved();
 	}
 	
 	/**
@@ -72,7 +79,8 @@ public class MusicOrganizerController {
 	 */
 	public void addSoundClips(){ //TODO Update parameters if needed
 		// TODO: Add your code here
-		
+		view.getSelectedSoundClips().forEach(view.getSelectedAlbum()::addSong);
+		view.onClipsUpdated();
 	}
 	
 	/**
@@ -80,7 +88,9 @@ public class MusicOrganizerController {
 	 */
 	public void removeSoundClips(){ //TODO Update parameters if needed
 		// TODO: Add your code here
-		
+		view.getSelectedSoundClips().forEach(view.getSelectedAlbum()::removeSong);
+		view.onClipsUpdated();
+
 	}
 	
 	/**

@@ -11,7 +11,7 @@ import root.model.SoundClip;
 
 public class SoundClipListView extends ListView<SoundClip> {
 
-	private List<SoundClip> clips;
+	private final List<SoundClip> clips;
 	
 	public SoundClipListView() {
 		super();
@@ -33,7 +33,7 @@ public class SoundClipListView extends ListView<SoundClip> {
 		// TODO: 
 		// Add all SoundClips contained in the parameter album to 
 		// the list of SoundClips 'clips' (the instance variable)
-		
+		clips.addAll(album.getSongs());
 
 		
 		ObservableList<SoundClip> temp = FXCollections.observableList(clips);
@@ -42,7 +42,6 @@ public class SoundClipListView extends ListView<SoundClip> {
 
 	public List<SoundClip> getSelectedClips(){
 		ObservableList<SoundClip> items = this.getSelectionModel().getSelectedItems();
-		List<SoundClip> clips = new ArrayList<>(items);
-		return clips;
+		return new ArrayList<>(items);
 	}
 }

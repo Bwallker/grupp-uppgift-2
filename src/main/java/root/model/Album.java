@@ -1,5 +1,7 @@
 package root.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import root.model.SoundClip;
 
@@ -9,13 +11,21 @@ import java.util.Objects;
 
 public class Album {
     protected String name;
+    @Getter @Setter
     protected Album parent;
+    @Getter
     protected List<Album> subAlbums;
+    @Getter
     protected List<SoundClip> songs;
 
 
     public Album(@NotNull String name) {
+        this(name, null);
+    }
+
+    public Album(@NotNull String name, Album parent) {
         assert name != null;
+        this.parent = parent;
         this.name = name;
         this.subAlbums = new ArrayList<>();
         this.songs = new ArrayList<>();
@@ -52,21 +62,27 @@ public class Album {
 
     /**
      * Adds a song to this albums songs
+     * Also adds this song to its parents if it does not have it.
      * @param song The song to add
      * @throws AssertionError Throws an AssertionsError if the passed in song is null*/
 
     public void addSong(@NotNull SoundClip song) {
         assert song != null;
+        if (this.parent != null && !parent.containsSong(song)) {
+            this.parent.addSong(song);
+        }
         this.songs.add(song);
     }
     /**
      * Removes a song from this albums songs
+     * Also recursively removes the song from all subalbums
      * @param song The song to remove
      * @throws AssertionError Throws an AssertionsError if the passed in song is*/
 
     public void removeSong(@NotNull SoundClip song) {
         assert song != null;
         this.songs.remove(song);
+        this.subAlbums.forEach((Album a) -> a.removeSong(song));
     }
     /**
      * @param song The song that this album might contain
@@ -96,11 +112,6 @@ public class Album {
 
     @Override
     public String toString() {
-        return "Album{" +
-                "name='" + name + '\'' +
-                ", parent=" + parent +
-                ", subAlbums=" + subAlbums +
-                ", songs=" + songs +
-                '}';
+        return this.name;
     }
 }

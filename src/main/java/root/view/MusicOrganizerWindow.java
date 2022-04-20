@@ -1,5 +1,6 @@
 package root.view;
 
+import lombok.Getter;
 import root.controller.MusicOrganizerController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -23,9 +24,12 @@ public class MusicOrganizerWindow extends Application {
 	
 	private BorderPane bord;
 	private static MusicOrganizerController controller;
+	@Getter
 	private TreeItem<Album> rootNode;
+	@Getter
 	private TreeView<Album> tree;
 	private ButtonPaneHBox buttons;
+	@Getter
 	private SoundClipListView soundClipTable;
 	private TextArea messages;
 	
@@ -96,18 +100,14 @@ public class MusicOrganizerWindow extends Application {
 		rootNode = new TreeItem<>(controller.getRootAlbum());
 		TreeView<Album> v = new TreeView<>(rootNode);
 		
-		v.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		v.setOnMouseClicked(e -> {
+			if (e.getClickCount() == 2) {
+				// This code gets invoked whenever the user double clicks in the TreeView
+				// TODO: ADD YOUR CODE HERE
+				soundClipTable.display(getSelectedAlbum());
 
-			@Override
-			public void handle(MouseEvent e) {
-				if(e.getClickCount()==2) {
-					// This code gets invoked whenever the user double clicks in the TreeView
-					// TODO: ADD YOUR CODE HERE
-					
-				}
-				
 			}
-			
+
 		});
 
 		
@@ -165,7 +165,7 @@ public class MusicOrganizerWindow extends Application {
 		return selectedItem == null ? null : selectedItem.getValue();
 	}
 	
-	private TreeItem<Album> getSelectedTreeItem(){
+	public TreeItem<Album> getSelectedTreeItem(){
 		return tree.getSelectionModel().getSelectedItem();
 	}
 	
@@ -182,11 +182,7 @@ public class MusicOrganizerWindow extends Application {
 		dialog.setHeaderText(null);
 		dialog.setContentText("Please enter the name for the album");
 		Optional<String> result = dialog.showAndWait();
-		if(result.isPresent()) {
-			return result.get();
-		} else {
-			return null;
-		}
+		return result.orElse(null);
 	}
 	
 	/**
@@ -229,7 +225,7 @@ public class MusicOrganizerWindow extends Application {
 	
 	/**
 	 * Refreshes the clipTable in response to the event that clips have
-	 * been modified in an album
+	 * been modified on an album
 	 */
 	public void onClipsUpdated(){
 		Album a = getSelectedAlbum();

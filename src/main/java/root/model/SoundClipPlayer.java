@@ -11,8 +11,8 @@ import javafx.scene.media.MediaPlayer;
 
 public class SoundClipPlayer implements Runnable {
 
-	private SoundClipBlockingQueue queue;
-	private List<SoundClip> clips; // The list of SoundClips to play with the media player
+	private final SoundClipBlockingQueue queue;
+	private final List<SoundClip> clips; // The list of SoundClips to play with the media player
 	private static final int SLEEP_DELAY = 500; // Sleep time in ms between sound clips when playing several in a row
 	private boolean playing = false; // True when playing SoundClips, false otherwise
 	
@@ -58,7 +58,7 @@ public class SoundClipPlayer implements Runnable {
 	
 	// Plays the SoundClips
 	private synchronized void playClips(){
-		if(clips == null || clips.size() == 0) {
+		if(clips.size() == 0) {
 			// Finished playing all the SoundClips
 			playing = false;
 			return;

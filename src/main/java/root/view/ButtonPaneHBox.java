@@ -12,11 +12,11 @@ public class ButtonPaneHBox extends HBox {
 
 	private MusicOrganizerController controller;
 	private MusicOrganizerWindow view;
-	
+
 	private Button newAlbumButton;
 	private Button deleteAlbumButton;
 	private Button addSoundClipsButton;
-	private Button removeSoundClipsButton;	
+	private Button removeSoundClipsButton;
 	private Button playButton;
 	public static final int BUTTON_MIN_WIDTH = 150;
 
@@ -26,20 +26,20 @@ public class ButtonPaneHBox extends HBox {
 		super();
 		this.controller = contr;
 		this.view = view;
-		
-		newAlbumButton = createNewAlbumButton();
+
+		this.newAlbumButton = createNewAlbumButton();
 		this.getChildren().add(newAlbumButton);
 
-		deleteAlbumButton = createDeleteAlbumButton();
+		this.deleteAlbumButton = createDeleteAlbumButton();
 		this.getChildren().add(deleteAlbumButton);
-		
-		addSoundClipsButton = createAddSoundClipsButton();
+
+		this.addSoundClipsButton = createAddSoundClipsButton();
 		this.getChildren().add(addSoundClipsButton);
-		
-		removeSoundClipsButton = createRemoveSoundClipsButton();
+
+		this.removeSoundClipsButton = createRemoveSoundClipsButton();
 		this.getChildren().add(removeSoundClipsButton);
-		
-		playButton = createPlaySoundClipsButton();
+
+		this.playButton = createPlaySoundClipsButton();
 		this.getChildren().add(playButton);
 		
 
@@ -55,15 +55,7 @@ public class ButtonPaneHBox extends HBox {
 		Button button = new Button("New Album");
 		button.setTooltip(new Tooltip("Create new sub-album to selected album"));
 		button.setMinWidth(BUTTON_MIN_WIDTH);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-			
-				controller.addNewAlbum();
-			}
-			
-		});
+		button.setOnAction(arg0 -> controller.addNewAlbum());
 		return button;
 	}
 	
@@ -71,15 +63,7 @@ public class ButtonPaneHBox extends HBox {
 		Button button = new Button("Remove Album");
 		button.setTooltip(new Tooltip("Remove selected album"));
 		button.setMinWidth(BUTTON_MIN_WIDTH);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				
-				controller.deleteAlbum();
-			}
-			
-		});
+		button.setOnAction(arg0 -> controller.deleteAlbum());
 		return button;
 	}
 	
@@ -87,15 +71,7 @@ public class ButtonPaneHBox extends HBox {
 		Button button = new Button("Add Sound Clips");
 		button.setTooltip(new Tooltip("Add selected sound clips to selected album"));
 		button.setMinWidth(BUTTON_MIN_WIDTH);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				
-				controller.addSoundClips();
-			}
-			
-		});
+		button.setOnAction(arg0 -> controller.addSoundClips());
 		return button;
 	}
 	
@@ -103,15 +79,7 @@ public class ButtonPaneHBox extends HBox {
 		Button button = new Button("Remove Sound Clips");
 		button.setTooltip(new Tooltip("Remove selected sound clips from selected album"));
 		button.setMinWidth(BUTTON_MIN_WIDTH);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				
-				controller.removeSoundClips();
-			}
-			
-		});
+		button.setOnAction(arg0 -> controller.removeSoundClips());
 		return button;
 	}
 	
@@ -119,15 +87,7 @@ public class ButtonPaneHBox extends HBox {
 		Button button = new Button("Play Sound Clips");
 		button.setTooltip(new Tooltip("Play selected sound clips"));
 		button.setMinWidth(BUTTON_MIN_WIDTH);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				
-				controller.playSoundClips();
-			}
-			
-		});
+		button.setOnAction(arg0 -> controller.playSoundClips());
 		return button;
 	}
 }

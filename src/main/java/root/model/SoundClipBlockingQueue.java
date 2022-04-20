@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SoundClipBlockingQueue {
 
-	private List<List<SoundClip>> queue = new LinkedList<>();
+	private final List<List<SoundClip>> queue = new LinkedList<>();
 	
 	// Add a list of SoundClips to the queue, and notify all
 	// threads waiting for SoundClips on the queue
