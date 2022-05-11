@@ -1,17 +1,16 @@
 package root.view;
 
-import lombok.Getter;
-import root.controller.MusicOrganizerController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import lombok.Getter;
+import root.controller.MusicOrganizerController;
 import root.model.Album;
 import root.model.SoundClip;
 
@@ -119,18 +118,13 @@ public class MusicOrganizerWindow extends Application {
 		v.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		v.display(controller.getRootAlbum());
 		
-		v.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent e) {
-				if(e.getClickCount() == 2) {
-					// This code gets invoked whenever the user double clicks in the sound clip table
-					// TODO: ADD YOUR CODE HERE
-					
-				}
-				
+		v.setOnMouseClicked(e -> {
+			if (e.getClickCount() == 2) {
+				// This code gets invoked whenever the user double clicks in the sound clip table
+				// TODO: ADD YOUR CODE HERE
+				controller.playSoundClips();
 			}
-			
+
 		});
 		
 		return v;

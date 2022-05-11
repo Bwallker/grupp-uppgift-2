@@ -3,7 +3,6 @@ package root.controller;
 import java.util.List;
 import java.util.Set;
 
-import javafx.scene.control.TreeItem;
 import root.model.Album;
 import root.model.SoundClip;
 import root.model.SoundClipBlockingQueue;
@@ -34,12 +33,11 @@ public class MusicOrganizerController {
 	 * Load the sound clips found in all subfolders of a path on disk. If path is not
 	 * an actual folder on disk, has no effect.
 	 */
-	public Set<SoundClip> loadSoundClips(String path) {
+	public void loadSoundClips(String path) {
 		Set<SoundClip> clips = SoundClipLoader.loadSoundClips(path);
 
 		// TODO: Add the loaded sound clips to the root album
 		clips.forEach(root::addSong);
-		return clips;
 	}
 	
 	public void registerView(MusicOrganizerWindow view) {
@@ -69,8 +67,8 @@ public class MusicOrganizerController {
 	 */
 	public void deleteAlbum(){ //TODO Update parameters if needed
 		// TODO: Add your code here
-		view.getSelectedAlbum().setParent(null);
 		view.getSelectedAlbum().getParent().removeAlbum(view.getSelectedAlbum());
+		view.getSelectedAlbum().setParent(null);
 		view.onAlbumRemoved();
 	}
 	
